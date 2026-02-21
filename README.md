@@ -93,6 +93,27 @@ nix build
 ./result/bin/qrab --help
 ```
 
+### Using Makefile (Nix required)
+
+Quick development with Makefile shortcuts:
+
+```bash
+git clone https://github.com/lucernae/qrab
+cd qrab
+
+# Run tests
+make test
+
+# Build debug binary
+make build
+
+# Build release binary
+make release
+
+# See all available targets
+make help
+```
+
 ### Using Cargo
 
 ```bash

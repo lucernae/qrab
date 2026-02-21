@@ -45,6 +45,7 @@
             rustc
             rustfmt
             clippy
+            gnumake
           ];
 
           RUST_SRC_PATH = "${rustToolchain}/lib/rustlib/src/rust/library";
@@ -65,6 +66,8 @@
             echo "Development environment ready. Rust toolchain exposed in .devenv/"
           '';
         };
+
+        formatter = pkgs.nixpkgs-fmt;
       }
     );
 }

@@ -27,6 +27,32 @@ nix develop
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
+## Quick Start with Makefile
+
+The project includes a Makefile for common development tasks:
+
+```bash
+# Show all available targets
+make help
+
+# Run tests
+make test
+
+# Build debug binary
+make build
+
+# Build release binary
+make release
+
+# Run full CI pipeline (tests + clippy + format check + build)
+make ci
+
+# Clean build artifacts
+make clean
+```
+
+**Note:** All Makefile targets use `nix develop` internally, ensuring consistent environment.
+
 ## Project Structure
 
 ```
