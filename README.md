@@ -9,6 +9,7 @@
 - **Pipe-friendly**: Accepts text from stdin, extracts all URLs automatically
 - **Interactive selection**: When multiple URLs are found, presents a selection menu
 - **Terminal QR codes**: Uses Unicode half-block characters for compact, scannable QR codes
+- **Theme support**: Automatic dark theme, with `--light-theme` flag for light terminals
 - **Works on bare consoles**: No X11 or graphical environment needed
 - **Smart deduplication**: Same URL appearing multiple times shows up once
 - **Email filtering**: Ignores email addresses, focuses only on URLs
@@ -78,6 +79,20 @@ QR code for: https://example.com
 ```
 
 Use arrow keys to select, Enter to confirm.
+
+### Terminal Theme Support
+
+By default, qrab assumes a dark terminal background. For light-themed terminals, use the `--light-theme` or `--invert` flag:
+
+```bash
+# For light terminal backgrounds
+echo "https://example.com" | qrab --light-theme
+
+# Alternative flag (same effect)
+echo "https://example.com" | qrab --invert
+```
+
+This inverts the QR code colors for better contrast on light backgrounds.
 
 ### Single URL (No Interaction)
 

@@ -9,3 +9,4 @@ qrcode = "0.14"
 dialoguer = "0.12"
 console = "0.16"
 anyhow = "1"
+clap = { version = "4", features = ["derive"] }

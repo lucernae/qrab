@@ -119,6 +119,8 @@ cargo test -- --test-threads=1 --nocapture
 
 - `renders_valid_url` - QR code generation succeeds
 - `renders_short_text` - Handles short input strings
+- `renders_light_theme` - Light theme rendering works
+- `theme_default_is_dark` - Default theme is dark
 
 #### `src/select.rs` Tests
 
@@ -188,6 +190,21 @@ curl -s https://example.com | cargo run
 
 Expected: QR code for one of the URLs found in the HTML.
 
+#### Test Theme Support
+
+```bash
+# Test dark theme (default)
+echo "https://example.com" | cargo run
+
+# Test light theme
+echo "https://example.com" | cargo run -- --light-theme
+
+# Test invert flag (alias)
+echo "https://example.com" | cargo run -- --invert
+```
+
+Expected: QR codes with inverted colors for light theme.
+
 ## Linting and Formatting
 
 ### Run Clippy
@@ -251,6 +268,7 @@ time cat urls.txt | cargo run --release
 - **dialoguer** (0.12) - Interactive terminal prompts
 - **console** (0.16) - Terminal abstraction
 - **anyhow** (1.x) - Error handling
+- **clap** (4.x) - Command-line argument parsing
 
 ### Updating Dependencies
 

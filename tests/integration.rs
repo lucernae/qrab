@@ -66,7 +66,7 @@ fn test_select_zero_urls_error() {
 
 #[test]
 fn test_qr_render_valid_url() {
-    let result = qr::render_qr("https://example.com");
+    let result = qr::render_qr("https://example.com", qr::Theme::Dark);
     assert!(result.is_ok());
     let qr_code = result.unwrap();
 
@@ -82,7 +82,7 @@ fn test_qr_render_valid_url() {
 
 #[test]
 fn test_qr_render_short_text() {
-    let result = qr::render_qr("hello");
+    let result = qr::render_qr("hello", qr::Theme::Dark);
     assert!(result.is_ok());
     assert!(!result.unwrap().is_empty());
 }
@@ -90,7 +90,7 @@ fn test_qr_render_short_text() {
 #[test]
 fn test_qr_render_long_url() {
     let long_url = "https://example.com/very/long/path/with/many/segments/and/query?param1=value1&param2=value2&param3=value3";
-    let result = qr::render_qr(long_url);
+    let result = qr::render_qr(long_url, qr::Theme::Dark);
     assert!(result.is_ok());
     assert!(!result.unwrap().is_empty());
 }
@@ -109,7 +109,7 @@ fn test_full_pipeline_single_url() {
     assert_eq!(chosen, "https://rust-lang.org");
 
     // Render
-    let qr_code = qr::render_qr(&chosen).unwrap();
+    let qr_code = qr::render_qr(&chosen, qr::Theme::Dark).unwrap();
     assert!(!qr_code.is_empty());
 }
 
@@ -123,7 +123,7 @@ fn test_full_pipeline_multiple_urls_first_choice() {
     // For automated testing, we can't interact with the menu,
     // but we can verify that both URLs are valid for QR generation
     for url in &urls {
-        let qr_code = qr::render_qr(url).unwrap();
+        let qr_code = qr::render_qr(url, qr::Theme::Dark).unwrap();
         assert!(!qr_code.is_empty());
     }
 }
@@ -166,7 +166,7 @@ fn test_qr_special_characters() {
     ];
 
     for url in urls {
-        let result = qr::render_qr(url);
+        let result = qr::render_qr(url, qr::Theme::Dark);
         assert!(result.is_ok(), "Failed to encode URL: {}", url);
     }
 }
@@ -176,4 +176,26 @@ fn test_extract_international_urls() {
     let text = "Visit https://例え.jp and https://münchen.de";
     let urls = extract::extract_urls(text);
     assert_eq!(urls.len(), 2);
+}
+
+#[test]
+fn test_qr_render_light_theme() {
+    let result = qr::render_qr("https://example.com", qr::Theme::Light);
+    assert!(result.is_ok());
+    let qr_code = result.unwrap();
+    assert!(!qr_code.is_empty());
+    assert!(qr_code.contains('█') || qr_code.contains('▀') || qr_code.contains('▄'));
+}
+
+#[test]
+fn test_qr_render_dark_theme() {
+    let result = qr::render_qr("https://example.com", qr::Theme::Dark);
+    assert!(result.is_ok());
+    let qr_code = result.unwrap();
+    assert!(!qr_code.is_empty());
+}
+
+#[test]
+fn test_theme_default() {
+    assert_eq!(qr::Theme::default(), qr::Theme::Dark);
 }
