@@ -2,6 +2,7 @@
 name = "qrab"
 version = "0.1.0"
 edition = "2021"
+authors = ["Rizky Maulana Nugraha <lana.pcfre@gmail.com>"]
 license = "MIT"
 description = "Terminal-friendly QR code generator for piped URLs"
 repository = "https://github.com/lucernae/qrab"

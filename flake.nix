@@ -19,6 +19,25 @@
         };
       in
       {
+        packages.default = pkgs.rustPlatform.buildRustPackage {
+          pname = "qrab";
+          version = "0.1.0";
+          src = ./.;
+
+          cargoLock = {
+            lockFile = ./Cargo.lock;
+          };
+
+          nativeBuildInputs = with pkgs; [ rustToolchain ];
+
+          meta = with pkgs.lib; {
+            description = "Terminal-friendly QR code generator for piped URLs";
+            homepage = "https://github.com/lucernae/qrab";
+            license = licenses.mit;
+            maintainers = [ ];
+          };
+        };
+
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             rustToolchain

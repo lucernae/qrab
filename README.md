@@ -3,7 +3,6 @@
 [![Build Status](https://github.com/lucernae/qrab/workflows/Build/badge.svg)](https://github.com/lucernae/qrab/actions/workflows/build.yml)
 [![Tests](https://github.com/lucernae/qrab/workflows/Tests/badge.svg)](https://github.com/lucernae/qrab/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Crates.io](https://img.shields.io/crates/v/qrab.svg)](https://crates.io/crates/qrab)
 [![Rust Version](https://img.shields.io/badge/rust-1.70%2B-blue.svg)](https://www.rust-lang.org)
 
 **QR Code Generator for Terminal-Friendly URL Access**
@@ -22,16 +21,77 @@
 
 ## Installation
 
-### Using Nix (recommended)
+### Using Nix Flakes (recommended)
+
+#### NixOS Configuration
+
+Add to your NixOS configuration (`/etc/nixos/configuration.nix` or flake):
+
+```nix
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    qrab.url = "github:lucernae/qrab";
+  };
+
+  outputs = { nixpkgs, qrab, ... }: {
+    nixosConfigurations.your-hostname = nixpkgs.lib.nixosSystem {
+      modules = [
+        {
+          environment.systemPackages = [
+            qrab.packages.x86_64-linux.default
+            # or qrab.packages.aarch64-linux.default for ARM
+          ];
+        }
+      ];
+    };
+  };
+}
+```
+
+#### Home Manager Configuration
+
+Add to your home-manager configuration:
+
+```nix
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager.url = "github:nix-community/home-manager";
+    qrab.url = "github:lucernae/qrab";
+  };
+
+  outputs = { nixpkgs, home-manager, qrab, ... }: {
+    homeConfigurations.your-user = home-manager.lib.homeManagerConfiguration {
+      modules = [
+        {
+          home.packages = [
+            qrab.packages.x86_64-linux.default
+            # or qrab.packages.aarch64-linux.default for ARM
+            # or qrab.packages.x86_64-darwin.default for macOS Intel
+            # or qrab.packages.aarch64-darwin.default for macOS ARM
+          ];
+        }
+      ];
+    };
+  };
+}
+```
+
+#### Try without installing
+
+```bash
+nix run github:lucernae/qrab -- --help
+```
+
+### Build from source with Nix
 
 ```bash
 git clone https://github.com/lucernae/qrab
 cd qrab
-nix develop
-cargo build --release
+nix build
+./result/bin/qrab --help
 ```
-
-The binary will be at `target/release/qrab`.
 
 ### Using Cargo
 
