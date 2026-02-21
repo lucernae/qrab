@@ -36,7 +36,8 @@ qrab/
 │   ├── lib.rs       # Module exports for testability
 │   ├── extract.rs   # URL extraction (linkify wrapper)
 │   ├── select.rs    # Interactive URL selection (dialoguer + /dev/tty)
-│   └── qr.rs        # QR code generation (Dense1x2 unicode rendering)
+│   ├── qr.rs        # QR code generation (Dense1x2 unicode rendering)
+│   └── layout.rs    # Grid layout for multiple QR codes
 ├── tests/           # Integration tests
 ├── Cargo.toml       # Dependencies and package metadata
 ├── flake.nix        # Nix development environment
@@ -127,6 +128,13 @@ cargo test -- --test-threads=1 --nocapture
 - `zero_urls_returns_error` - Error when no URLs provided
 - `single_url_returns_directly` - Bypasses menu for single URL
 
+#### `src/layout.rs` Tests
+
+- `merge_single_qr` - Single QR code merging works
+- `merge_two_qr_codes` - Side-by-side QR code merging
+- `merge_different_heights` - Handles QR codes of different heights
+- `empty_qr_codes` - Empty input handling
+
 ### Integration Tests
 
 Located in `tests/integration.rs`, these test the full pipeline:
@@ -204,6 +212,21 @@ echo "https://example.com" | cargo run -- --invert
 ```
 
 Expected: QR codes with inverted colors for light theme.
+
+#### Test --all Flag (Grid Layout)
+
+```bash
+# Test with 2 URLs (should display side-by-side)
+echo "Visit https://example.com or https://rust-lang.org" | cargo run -- --all
+
+# Test with many URLs (should wrap to multiple rows)
+echo "https://example.com https://rust-lang.org https://github.com https://crates.io" | cargo run -- --all
+
+# Combine with theme flag
+echo "https://example.com https://rust-lang.org" | cargo run -- --all --light-theme
+```
+
+Expected: Multiple QR codes arranged in a grid, wrapping based on terminal width.
 
 ## Linting and Formatting
 

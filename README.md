@@ -94,6 +94,20 @@ echo "https://example.com" | qrab --invert
 
 This inverts the QR code colors for better contrast on light backgrounds.
 
+### Display All URLs
+
+Use the `--all` or `-a` flag to generate QR codes for all URLs without the selection menu. QR codes are arranged in a grid layout, wrapping to new rows based on terminal width:
+
+```bash
+# Display all URLs in grid layout
+echo "Visit https://example.com or https://rust-lang.org" | qrab --all
+
+# Combine with theme flag
+curl -s https://example.com | qrab --all --light-theme
+```
+
+This is useful when you want to quickly scan multiple URLs without interactive selection.
+
 ### Single URL (No Interaction)
 
 When only one URL is found, qrab skips the menu and displays the QR code immediately:
@@ -135,6 +149,23 @@ cat /var/log/setup.log | qrab
 gh run view 123456 --log | qrab
 # Scan the artifact download URL
 ```
+
+### Tailscale Login URL
+
+Authorize Tailscale from a headless server:
+
+```bash
+# Start tailscale and pipe the login URL to qrab
+sudo tailscale up 2>&1 | qrab
+
+# The authentication URL will be extracted and displayed as a QR code
+# Scan with your phone to complete login
+```
+
+This is particularly useful for:
+- Headless servers without a browser
+- SSH sessions where copying URLs is cumbersome
+- Initial device setup on Raspberry Pi or similar devices
 
 ## Requirements
 

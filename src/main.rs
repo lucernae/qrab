@@ -1,9 +1,11 @@
 mod extract;
+mod layout;
 mod qr;
 mod select;
 
 use anyhow::{bail, Context, Result};
 use clap::Parser;
+use layout::QrGrid;
 use std::io::{self, IsTerminal, Read};
 
 /// Extract URLs from piped text and display QR codes in the terminal
@@ -17,6 +19,10 @@ struct Args {
     /// Invert QR code colors (alias for --light-theme)
     #[arg(long, conflicts_with = "light_theme")]
     invert: bool,
+
+    /// Display QR codes for all URLs found (no selection menu)
+    #[arg(long, short)]
+    all: bool,
 }
 
 fn main() -> Result<()> {
@@ -29,10 +35,11 @@ fn main() -> Result<()> {
         eprintln!("qrab extracts URLs from piped text and displays a QR code.");
         eprintln!();
         eprintln!("Options:");
-        eprintln!("  --light-theme    Use light terminal theme");
-        eprintln!("  --invert         Invert colors (same as --light-theme)");
-        eprintln!("  -h, --help       Print help");
-        eprintln!("  -V, --version    Print version");
+        eprintln!("  -a, --all            Display all URLs (no selection menu)");
+        eprintln!("      --light-theme    Use light terminal theme");
+        eprintln!("      --invert         Invert colors (same as --light-theme)");
+        eprintln!("  -h, --help           Print help");
+        eprintln!("  -V, --version        Print version");
         std::process::exit(1);
     }
 
@@ -51,8 +58,6 @@ fn main() -> Result<()> {
         bail!("No URLs found in the input text");
     }
 
-    let chosen = select::select_url(&urls)?;
-
     // Determine theme based on flags
     let theme = if args.light_theme || args.invert {
         qr::Theme::Light
@@ -60,10 +65,33 @@ fn main() -> Result<()> {
         qr::Theme::Dark
     };
 
-    let qr_string = qr::render_qr(&chosen, theme)?;
+    if args.all {
+        // Display all URLs in grid layout
+        eprintln!("Found {} URL(s):", urls.len());
+        for url in &urls {
+            eprintln!("  - {}", url);
+        }
+        eprintln!();
 
-    eprintln!("QR code for: {chosen}");
-    println!("{qr_string}");
+        // Generate QR codes for all URLs
+        let qr_codes: Result<Vec<String>> = urls
+            .iter()
+            .map(|url| qr::render_qr(url, theme))
+            .collect();
+
+        let qr_codes = qr_codes?;
+
+        // Layout in grid
+        let grid = QrGrid::new(qr_codes);
+        println!("{}", grid.render());
+    } else {
+        // Original behavior: select one URL
+        let chosen = select::select_url(&urls)?;
+        let qr_string = qr::render_qr(&chosen, theme)?;
+
+        eprintln!("QR code for: {chosen}");
+        println!("{qr_string}");
+    }
 
     Ok(())
 }
