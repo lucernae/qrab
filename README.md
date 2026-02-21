@@ -1,5 +1,11 @@
 # qrab
 
+[![Build Status](https://github.com/lucernae/qrab/workflows/Build/badge.svg)](https://github.com/lucernae/qrab/actions/workflows/build.yml)
+[![Tests](https://github.com/lucernae/qrab/workflows/Tests/badge.svg)](https://github.com/lucernae/qrab/actions/workflows/test.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Crates.io](https://img.shields.io/crates/v/qrab.svg)](https://crates.io/crates/qrab)
+[![Rust Version](https://img.shields.io/badge/rust-1.70%2B-blue.svg)](https://www.rust-lang.org)
+
 **QR Code Generator for Terminal-Friendly URL Access**
 
 `qrab` is a Rust CLI tool that extracts URLs from piped text and displays scannable QR codes directly in your terminal using Unicode block characters. Perfect for accessing URLs in non-graphical environments like Raspberry Pi consoles, SSH sessions, or headless servers.
@@ -190,9 +196,26 @@ This is particularly useful for:
 
 See [DEVELOPMENT.md](DEVELOPMENT.md) for build instructions, testing, and contribution guidelines.
 
+## Similar Projects & Acknowledgements
+
+While `qrab` focuses on pipe-friendly URL extraction and terminal QR display, there are other excellent QR code generators worth mentioning:
+
+- **[qrencode](https://fukuchi.org/works/qrencode/)** - Classic QR code generator (C-based) with terminal output support
+- **[qr](https://github.com/fujiapple852/qr)** - Simple QR code generator CLI in Rust
+- **[qrtool](https://github.com/sorairolake/qrtool)** - Another Rust-based QR code utility
+- **[qrcp](https://github.com/claudiodangelis/qrcp)** - Transfer files via QR code (Go-based)
+
+`qrab` differentiates itself by:
+- Automatic URL extraction from piped text (no need to manually copy URLs)
+- Interactive selection menu for multiple URLs
+- Grid layout for displaying all URLs at once
+- Specific focus on terminal-based URL workflow
+
 ## License
 
-[MIT OR Apache-2.0]
+MIT
+
+See [LICENSE](LICENSE) file for details.
 
 ## Repository
 

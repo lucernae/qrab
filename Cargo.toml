@@ -2,6 +2,12 @@
 name = "qrab"
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
+description = "Terminal-friendly QR code generator for piped URLs"
+repository = "https://github.com/lucernae/qrab"
+readme = "README.md"
+keywords = ["qr", "qrcode", "terminal", "cli", "url"]
+categories = ["command-line-utilities"]
 
 [dependencies]
 linkify = "0.10"
