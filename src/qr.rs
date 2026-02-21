@@ -3,18 +3,13 @@ use qrcode::render::unicode;
 use qrcode::QrCode;
 
 /// Terminal theme for QR code rendering
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum Theme {
     /// Dark terminal background (default)
+    #[default]
     Dark,
     /// Light terminal background
     Light,
-}
-
-impl Default for Theme {
-    fn default() -> Self {
-        Theme::Dark
-    }
 }
 
 /// Generate a QR code for the given text and return it as a
