@@ -29,6 +29,22 @@
           ];
 
           RUST_SRC_PATH = "${rustToolchain}/lib/rustlib/src/rust/library";
+
+          shellHook = ''
+            # Create .devenv directory structure for JetBrains IDE detection
+            mkdir -p .devenv/bin
+            mkdir -p .devenv/lib
+
+            # Symlink Rust toolchain binaries
+            ln -sf ${rustToolchain}/bin/* .devenv/bin/
+
+            # Symlink Rust libraries
+            if [ -d "${rustToolchain}/lib" ]; then
+              ln -sf ${rustToolchain}/lib/* .devenv/lib/
+            fi
+
+            echo "Development environment ready. Rust toolchain exposed in .devenv/"
+          '';
         };
       }
     );
