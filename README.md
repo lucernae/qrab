@@ -282,7 +282,6 @@ See [DEVELOPMENT.md](DEVELOPMENT.md) for build instructions, testing, and contri
 While `qrab` focuses on pipe-friendly URL extraction and terminal QR display, there are other excellent QR code generators worth mentioning:
 
 - **[qrencode](https://fukuchi.org/works/qrencode/)** - Classic QR code generator (C-based) with terminal output support
-- **[qr](https://github.com/fujiapple852/qr)** - Simple QR code generator CLI in Rust
 - **[qrtool](https://github.com/sorairolake/qrtool)** - Another Rust-based QR code utility
 - **[qrcp](https://github.com/claudiodangelis/qrcp)** - Transfer files via QR code (Go-based)
 
