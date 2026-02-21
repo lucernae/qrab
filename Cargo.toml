@@ -4,3 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+linkify = "0.10"
+qrcode = "0.14"
+dialoguer = "0.12"
+console = "0.16"
+anyhow = "1"
