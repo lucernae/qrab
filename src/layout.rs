@@ -39,8 +39,7 @@ impl QrGrid {
 
         // Calculate how many QR codes can fit per row
         // Add 2 spaces padding between QR codes
-        let qr_codes_per_row =
-            ((self.terminal_width + 2) / (qr_width + 2)).max(1);
+        let qr_codes_per_row = ((self.terminal_width + 2) / (qr_width + 2)).max(1);
 
         let mut result = Vec::new();
 
@@ -60,17 +59,10 @@ impl QrGrid {
         }
 
         // Split each QR code into lines
-        let qr_lines: Vec<Vec<&str>> = qr_codes
-            .iter()
-            .map(|qr| qr.lines().collect())
-            .collect();
+        let qr_lines: Vec<Vec<&str>> = qr_codes.iter().map(|qr| qr.lines().collect()).collect();
 
         // Find the maximum number of lines
-        let max_lines = qr_lines
-            .iter()
-            .map(|lines| lines.len())
-            .max()
-            .unwrap_or(0);
+        let max_lines = qr_lines.iter().map(|lines| lines.len()).max().unwrap_or(0);
 
         let mut merged = Vec::new();
 

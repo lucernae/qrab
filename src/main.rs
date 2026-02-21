@@ -74,10 +74,8 @@ fn main() -> Result<()> {
         eprintln!();
 
         // Generate QR codes for all URLs
-        let qr_codes: Result<Vec<String>> = urls
-            .iter()
-            .map(|url| qr::render_qr(url, theme))
-            .collect();
+        let qr_codes: Result<Vec<String>> =
+            urls.iter().map(|url| qr::render_qr(url, theme)).collect();
 
         let qr_codes = qr_codes?;
 
