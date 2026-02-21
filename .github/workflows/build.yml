@@ -19,15 +19,16 @@ jobs:
           - target: x86_64-unknown-linux-gnu
             os: ubuntu-latest
             artifact_name: qrab-linux-x86_64
-          - target: aarch64-unknown-linux-gnu
-            os: ubuntu-latest
-            artifact_name: qrab-linux-aarch64
-          - target: x86_64-apple-darwin
-            os: macos-latest
-            artifact_name: qrab-macos-x86_64
-          - target: aarch64-apple-darwin
-            os: macos-latest
-            artifact_name: qrab-macos-aarch64
+# commented out until we can figure out how to cross-compile
+#          - target: aarch64-unknown-linux-gnu
+#            os: ubuntu-latest
+#            artifact_name: qrab-linux-aarch64
+#          - target: x86_64-apple-darwin
+#            os: macos-latest
+#            artifact_name: qrab-macos-x86_64
+#          - target: aarch64-apple-darwin
+#            os: macos-latest
+#            artifact_name: qrab-macos-aarch64
 
     steps:
       - name: Checkout code
